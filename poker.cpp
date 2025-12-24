@@ -7,7 +7,11 @@
 
 using namespace std;
 
+int findHighestHand(board, hole);
+int generateRandomInt(min, max);
+
 int main() {
+
     // random seed
     random_device rd;
     mt19937 rng(rd());
@@ -28,6 +32,7 @@ int main() {
     vector<Card> player_cards;
     vector<Card> load_cards;
     vector<vector<Card> > cpu_cards;
+    vector<Card> board;
 
     // creates and adds every card to the list of cards
     for (int s = hearts; s < spades; s++) {
@@ -38,45 +43,92 @@ int main() {
             deck.push_back(new_card);
         }
     }
-    shuffle(deck.begin(), deck.end(), rng);
 
-    string start_game;
-    cout << "Would you like to start a game of poker?(yes/no) ";
-    cin >> start_game;
+    // game loop
+    while (true) {
 
-    if (start_game == "yes") {
-        cout << "How many CPU players? ";
-        cin >> cpu_count;
+        shuffle(deck.begin(), deck.end(), rng);
 
-        for (int i = 0; i < cpu_count; i++) {
-            cpu_money.push_back(1000);
-        }
+        string start_game;
+        cout << "Would you like to start a game of poker?(yes/no) ";
+        cin >> start_game;
 
-        // prints out the cpu_money for debugging
-        for (int i = 0; i < cpu_money.size(); i++) {
-                cout << cpu_money[i] << " ";
-        }
+        if (start_game == "yes") {
+            cout << "How many CPU players? ";
+            cin >> cpu_count;
 
-        // deals the cards
-        for (int i = 0; i < 2; i++) { player_cards.push_back(deck.back()); deck.pop_back(); }
+            for (int i = 0; i < cpu_count; i++) {
+                cpu_money.push_back(1000);
+            }
 
-        for (int i = 0; i < cpu_count; i++) {
-            for (int i = 0; i < 2; i++) { load_cards.push_back(deck.back()); deck.pop_back(); }
-            cpu_cards.push_back(load_cards);
+            // prints out the cpu_money for debugging
+            for (int i = 0; i < cpu_money.size(); i++) {
+                    cout << cpu_money[i] << " ";
+            }
 
-            load_cards.clear();
-        }
+            // deals the cards
+            for (int i = 0; i < 2; i++) { player_cards.push_back(deck.back()); deck.pop_back(); }
 
-        // prints out the cpus' cards for debugging and stuff
-        for (int i = 0; i < cpu_cards.size(); i++) {
-                cout << "[1st card value: " << static_cast<int>(cpu_cards[i][0].value) << ", ";
+            for (int i = 0; i < cpu_count; i++) {
+                for (int i = 0; i < 2; i++) { load_cards.push_back(deck.back()); deck.pop_back(); }
+                cpu_cards.push_back(load_cards);
+
+                load_cards.clear();
+            }
+            
+            // prints out the cpus' cards for debugging and stuff
+            for (int i = 0; i < cpu_cards.size(); i++) {
+                cout << "[[1st card value: " << static_cast<int>(cpu_cards[i][0].value) << ", ";
                 cout << "1st card suit: " << static_cast<int>(cpu_cards[i][0].suit) << "], ";
                 cout << "[2nd card value: " << static_cast<int>(cpu_cards[i][1].value) << ", ";
                 cout << "2nd card suit: " << static_cast<int>(cpu_cards[i][1].suit) << "]], ";
+            }
+
+            // deals out the flop
+            for (int i = 0; i < 3; i++) {
+                board.push_back(deck.back());
+                deck.pop_back()
+            }
+
+            // randomly sets the players distance from the dealer
+            int player_to_dealer_dist = randomInt(1, cpu_count + 1);
+
+            bool can_check = true;
+            string action;
+
+            for (int i = 0; i < cpu_count + 1; i++) {
+                if (i == player_to_dealer_dist - 1) {
+                    cout << money;
+                    if (can_check) { 
+                        cout << "What would you like to do? (check/bet/fold) "; 
+                    } else { 
+                        cout << "What would you like to do? (bet/fold) "; 
+                    }
+
+                    cin >> action;
+                    if (action == "check") {
+                        can_check = false;
+                    } else if (action == "fold") {
+                        break
+                    } else if (action == "bet") {
+                        // aight bet
+                    }
+                }
+            }
 
         }
     }
-
+    
     return 0;
 
+}
+
+int randomInt(min, max) {
+    uniform_int_distribution<int> dist(min, max);
+
+    return dist(mt);
+}
+
+int highestHand(board, hole) {
+    
 }

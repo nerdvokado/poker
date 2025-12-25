@@ -7,8 +7,8 @@
 
 using namespace std;
 
-int findHighestHand(board, hole);
-int generateRandomInt(min, max);
+int highestHand(vector<Card>& board, vector<Card>& hole);
+int randomInt(int min, int max);
 
 int main() {
 
@@ -87,7 +87,7 @@ int main() {
             // deals out the flop
             for (int i = 0; i < 3; i++) {
                 board.push_back(deck.back());
-                deck.pop_back()
+                deck.pop_back();
             }
 
             // randomly sets the players distance from the dealer
@@ -109,7 +109,7 @@ int main() {
                     if (action == "check") {
                         can_check = false;
                     } else if (action == "fold") {
-                        break
+                        break;
                     } else if (action == "bet") {
                         // aight bet
                     }
@@ -123,12 +123,12 @@ int main() {
 
 }
 
-int randomInt(min, max) {
+int randomInt(int min, int max) {
     uniform_int_distribution<int> dist(min, max);
 
     return dist(mt);
 }
 
-int highestHand(board, hole) {
+int highestHand(vector<Card>& board, vector<Card>& hole) {
     
 }

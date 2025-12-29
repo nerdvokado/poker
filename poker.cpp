@@ -7,6 +7,14 @@
 
 using namespace std;
 
+enum Suit { hearts, diamonds, clubs, spades };
+enum Value { two = 2, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace };
+
+struct Card {
+    Suit suit;
+    Value value;
+};
+
 int highestHand(vector<Card>& board, vector<Card>& hole);
 int randomInt(int min, int max);
 
@@ -19,14 +27,6 @@ int main() {
     int money = 1000;
     int cpu_count;
     vector<int> cpu_money;
-
-    enum Suit { hearts, diamonds, clubs, spades };
-    enum Value { two = 2, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace };
-
-    struct Card {
-        Suit suit;
-        Value value;
-    };
 
     vector<Card> deck;
     vector<Card> player_cards;
@@ -116,6 +116,9 @@ int main() {
                 }
             }
 
+        } else if (start_game == "no" || start_game == "naur") {
+            cout << "ok";
+            break;
         }
     }
     
